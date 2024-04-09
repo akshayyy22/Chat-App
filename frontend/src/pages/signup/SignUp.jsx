@@ -1,145 +1,121 @@
-import GenderCheckbox from "./GenderCheckbox.jsx";
+import { Link } from "react-router-dom";
+import GenderCheckbox from "./GenderCheckbox";
+import { useState } from "react";
+import useSignup from "../../hooks/useSignup";
 
 const SignUp = () => {
+  const [inputs, setInputs] = useState({
+    fullName: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
+
+  const { loading, signup } = useSignup();
+
+  const handleCheckboxChange = (gender) => {
+    setInputs({ ...inputs, gender });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signup(inputs);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
       <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
         <div>
           <div>
-		  <h2 class="text-2xl font-bold text-slate-200 mb-4 text-center">Sign Up</h2>
-            <form class="flex flex-col">
-              <div class="flex space-x-4 mb-4">
+            <h2 className="text-2xl font-bold text-slate-200 mb-4 text-center">
+              Sign Up
+            </h2>
+            <form className="flex flex-col" onSubmit={handleSubmit}>
+              <div className="flex space-x-4 mb-4">
                 <input
                   placeholder="First Name"
-                  class="bg-slate-800 text-gray-200 border-0 rounded-md p-2 w-1/2 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+                  className="bg-slate-800 text-gray-200 border-0 rounded-md p-2 w-1/2 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                   type="text"
+                  value={inputs.fullName}
+                  onChange={(e) =>
+                    setInputs({ ...inputs, fullName: e.target.value })
+                  }
                 />
                 <input
-                  placeholder="Last Name"
-                  class="bg-slate-800 text-gray-200 border-0 rounded-md p-2 w-1/2 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+                  placeholder="Username"
+                  className="bg-slate-800 text-gray-200 border-0 rounded-md p-2 w-1/2 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                   type="text"
+                  value={inputs.username}
+                  onChange={(e) =>
+                    setInputs({ ...inputs, username: e.target.value })
+                  }
                 />
               </div>
               <input
                 placeholder="Email"
                 class="bg-slate-800 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                 type="email"
+                value={inputs.email}
+                onChange={(e) =>
+                  setInputs({ ...inputs, email: e.target.value })
+                }
               />
-             
+
               <input
                 placeholder="Password"
-                class="bg-slate-800 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+                className="bg-slate-800 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                 type="password"
+                value={inputs.password}
+                onChange={(e) =>
+                  setInputs({ ...inputs, password: e.target.value })
+                }
               />
               <input
                 placeholder="Confirm Password"
-                class="bg-slate-800 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+                className="bg-slate-800 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                 type="password"
+                value={inputs.confirmPassword}
+                onChange={(e) =>
+                  setInputs({ ...inputs, confirmPassword: e.target.value })
+                }
               />
-              <label
-                class="text-sm mb-2 text-slate-300 cursor-pointer"
-                for="gender"
-              >
-                Gender
-              </label>
-              <select
-                class="bg-slate-800 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-                id="gender"
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-              
-              <input
-                class="bg-slate-800 text-gray-200 border-0 rounded-md p-2"
-                id="age"
-                type="date"
+
+              <GenderCheckbox
+                onCheckboxChange={handleCheckboxChange}
+                selectedGender={inputs.gender}
               />
-              <p class="text-slate-300 mt-4">
-                Already have an account ?&nbsp;
-                <a
-                  class="text-sm text-slate-400 -200 hover:underline mt-4"
+
+              <p className="text-slate-300 mt-4">
+                Already have an account?&nbsp;
+                <Link
+                  to="/login"
+                  className="text-sm text-slate-400 -200 hover:underline mt-4"
                   href="#"
                 >
-                   Login
-                </a>
+                  Login
+                </Link>
               </p>
               <button
-                class="bg-gradient-to-r from-slate-500 to-slate-400 text-slate-200 font-bold py-2 px-4 rounded-md mt-4 hover:bg-slate-500 hover:to-slate-400 transition ease-in-out duration-150"
+                className="bg-gradient-to-r from-slate-500 to-slate-400 text-slate-200 font-bold py-2 px-4 rounded-md mt-4 hover:bg-slate-500 hover:to-slate-400 transition ease-in-out duration-150"
                 type="submit"
+                disabled={loading}
               >
-                Sign Up
+                {loading ? (
+                  <span className="loading loading-spinner"></span>
+                ) : (
+                  "Sign Up"
+                )}
               </button>
             </form>
           </div>
         </div>
       </div>
+      <div className="absolute bottom-0 right-0 m-6 px-4 py-2 bg-slate-400 rounded-full text-slate-700 text-sm font-medium">Created by Akshay Esackimuthu</div>
+
     </div>
   );
 };
+
 export default SignUp;
-
-// STARTER CODE FOR THE SIGNUP COMPONENT
-// import GenderCheckbox from "./GenderCheckbox";
-
-// const SignUp = () => {
-// 	return (
-// 		<div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
-// 			<div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-// 				<h1 className='text-3xl font-semibold text-center text-gray-300'>
-// 					Sign Up <span className='text-blue-500'> ChatApp</span>
-// 				</h1>
-
-// 				<form>
-// 					<div>
-// 						<label className='label p-2'>
-// 							<span className='text-base label-text'>Full Name</span>
-// 						</label>
-// 						<input type='text' placeholder='John Doe' className='w-full input input-bordered  h-10' />
-// 					</div>
-
-// 					<div>
-// 						<label className='label p-2 '>
-// 							<span className='text-base label-text'>Username</span>
-// 						</label>
-// 						<input type='text' placeholder='johndoe' className='w-full input input-bordered h-10' />
-// 					</div>
-
-// 					<div>
-// 						<label className='label'>
-// 							<span className='text-base label-text'>Password</span>
-// 						</label>
-// 						<input
-// 							type='password'
-// 							placeholder='Enter Password'
-// 							className='w-full input input-bordered h-10'
-// 						/>
-// 					</div>
-
-// 					<div>
-// 						<label className='label'>
-// 							<span className='text-base label-text'>Confirm Password</span>
-// 						</label>
-// 						<input
-// 							type='password'
-// 							placeholder='Confirm Password'
-// 							className='w-full input input-bordered h-10'
-// 						/>
-// 					</div>
-
-// 					<GenderCheckbox />
-
-// 					<a className='text-sm hover:underline hover:text-blue-600 mt-2 inline-block' href='#'>
-// 						Already have an account?
-// 					</a>
-
-// 					<div>
-// 						<button className='btn btn-block btn-sm mt-2 border border-slate-700'>Sign Up</button>
-// 					</div>
-// 				</form>
-// 			</div>
-// 		</div>
-// 	);
-// };
-// export default SignUp;

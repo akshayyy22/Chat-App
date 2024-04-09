@@ -1,49 +1,72 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
+
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { loading, login } = useLogin();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(username, password);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
       <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
+
         <div>
           <div>
-            <div class="max-w-md mx-auto">
-              <div class="flex items-center space-x-5 justify-center">
-			  <h2 class="text-2xl font-bold text-slate-200 mb-4 text-center">Login</h2>
+            <div className="max-w-md mx-auto">
+              <div className="flex items-center space-x-5 justify-center">
+                <h2 className="text-2xl font-bold text-slate-200 mb-4 text-center">
+                  Login
+                </h2>
               </div>
-              <div class="mt-5">
+              <form onSubmit={handleSubmit}>
+
+              <div className="mt-5">
                 <label
-                  class="font-semibold text-sm text-slate-300 pb-1 block"
+                  className="font-semibold text-sm text-slate-300 pb-1 block"
                   for="login"
                 >
-                  E-mail
+                  Username
                 </label>
                 <input
-                  class="bg-slate-800 text-gray-200 border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+                  className="bg-slate-800 text-gray-200 border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                   type="text"
                   id="login"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
 
                 <label
-                  class="font-semibold text-sm text-slate-300 pb-1 block"
+                  className="font-semibold text-sm text-slate-300 pb-1 block"
                   for="password"
                 >
                   Password
                 </label>
                 <input
-                  class="bg-slate-800 text-gray-200 border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
+                  className="bg-slate-800 text-gray-200 border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full focus:bg-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                   type="password"
                   id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div class="text-right mb-4">
+              <div className="text-right mb-4">
                 <a
-                  class="text-xs font-display font-semibold text-slate-300 hover:text-gray-600 cursor-pointer"
+                  className="text-xs font-display font-semibold text-slate-300 hover:text-gray-600 cursor-pointer"
                   href="#"
                 >
                   Forgot Password?
                 </a>
               </div>
-              <div class="flex justify-center w-full items-center">
+              <div className="flex justify-center w-full items-center">
                 <div>
-                  <button class="flex items-center justify-center py-2 px-20 bg-white hover:bg-gray-200 focus:ring-blue-500 focus:ring-offset-blue-200 text-gray-700 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
+                  <button className="flex items-center justify-center py-2 px-20 bg-white hover:bg-gray-200 focus:ring-blue-500 focus:ring-offset-blue-200 text-gray-700 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg">
                     <svg
                       viewBox="0 0 24 24"
                       height="25"
@@ -118,9 +141,9 @@ const Login = () => {
                         fill="#FFF"
                       ></path>
                     </svg>
-                    <span class="ml-2">Sign in with Google</span>
+                    <span className="ml-2">Sign in with Google</span>
                   </button>
-                  <button class="flex items-center justify-center py-2 px-20 bg-white hover:bg-gray-200 focus:ring-blue-500 focus:ring-offset-blue-200 text-gray-700 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg mt-4">
+                  <button className="flex items-center justify-center py-2 px-20 bg-white hover:bg-gray-200 focus:ring-blue-500 focus:ring-offset-blue-200 text-gray-700 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg mt-4">
                     <svg
                       viewBox="0 0 30 30"
                       height="30"
@@ -131,75 +154,43 @@ const Login = () => {
                     >
                       <path d="M25.565,9.785c-0.123,0.077-3.051,1.702-3.051,5.305c0.138,4.109,3.695,5.55,3.756,5.55 c-0.061,0.077-0.537,1.963-1.947,3.94C23.204,26.283,21.962,28,20.076,28c-1.794,0-2.438-1.135-4.508-1.135 c-2.223,0-2.852,1.135-4.554,1.135c-1.886,0-3.22-1.809-4.4-3.496c-1.533-2.208-2.836-5.673-2.882-9 c-0.031-1.763,0.307-3.496,1.165-4.968c1.211-2.055,3.373-3.45,5.734-3.496c1.809-0.061,3.419,1.242,4.523,1.242 c1.058,0,3.036-1.242,5.274-1.242C21.394,7.041,23.97,7.332,25.565,9.785z M15.001,6.688c-0.322-1.61,0.567-3.22,1.395-4.247 c1.058-1.242,2.729-2.085,4.17-2.085c0.092,1.61-0.491,3.189-1.533,4.339C18.098,5.937,16.488,6.872,15.001,6.688z"></path>
                     </svg>
-                    <span class="ml-2">Sign in with Apple</span>
+                    <span className="ml-2">Sign in with Apple</span>
                   </button>
                 </div>
               </div>
-              <div class="mt-5">
+              <div className="mt-5">
                 <button
-                  class="py-2 px-4 bg-slate-500 hover:bg-slate-400 focus:ring-slate-400 focus:ring-offset-blue-200 text-slate-200 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+                  className="py-2 px-4 bg-slate-500 hover:bg-slate-400 focus:ring-slate-400 focus:ring-offset-blue-200 text-slate-200 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                   type="submit"
+                  disabled={loading}
                 >
-                  Log in
+                  {loading ? (
+                    <span className="loading loading-spinner "></span>
+                  ) : (
+                    "Login"
+                  )}
                 </button>
               </div>
-              <div class="flex items-center justify-between mt-4">
-                <span class="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
-                <a
-                  class="text-xs text-slate-400 uppercase dark:text-gray-400 hover:underline"
+              <div className="flex items-center justify-between mt-4">
+                <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
+                <Link
+                  to="/signup"
+                  className="text-xs text-slate-400 uppercase dark:text-gray-400 hover:underline"
                   href="#"
                 >
                   or sign up
-                </a>
-                <span class="w-1/5 border-b dark:border-gray-400 md:w-1/4"></span>
+                </Link>
+                <span className="w-1/5 border-b dark:border-gray-400 md:w-1/4"></span>
               </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
+      <div className="absolute bottom-0 right-0 m-6 px-4 py-2 bg-slate-400 rounded-full text-slate-700 text-sm font-medium">Created by Akshay Esackimuthu</div>
+
     </div>
   );
 };
 export default Login;
 
-// STARTER CODE FOR THIS FILE
-// const Login = () => {
-// 	return (
-// 		<div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
-// 			<div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-// 				<h1 className='text-3xl font-semibold text-center text-gray-300'>
-// 					Login
-// 					<span className='text-blue-500'> ChatApp</span>
-// 				</h1>
-
-// 				<form>
-// 					<div>
-// 						<label className='label p-2'>
-// 							<span className='text-base label-text'>Username</span>
-// 						</label>
-// 						<input type='text' placeholder='Enter username' className='w-full input input-bordered h-10' />
-// 					</div>
-
-// 					<div>
-// 						<label className='label'>
-// 							<span className='text-base label-text'>Password</span>
-// 						</label>
-// 						<input
-// 							type='password'
-// 							placeholder='Enter Password'
-// 							className='w-full input input-bordered h-10'
-// 						/>
-// 					</div>
-// 					<a href='#' className='text-sm  hover:underline hover:text-blue-600 mt-2 inline-block'>
-// 						{"Don't"} have an account?
-// 					</a>
-
-// 					<div>
-// 						<button className='btn btn-block btn-sm mt-2'>Login</button>
-// 					</div>
-// 				</form>
-// 			</div>
-// 		</div>
-// 	);
-// };
-// export default Login;
