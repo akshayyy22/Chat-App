@@ -1,7 +1,7 @@
 
 # Real-Time Social Platform
 
-[Project Video](https://github.com/akshayyy22/Chat-App/frontend/src/assets/video1.mov)
+[Project Video](https://drive.google.com/file/d/1SMpVDGx3mXK62uaPK6kEFpnjLtVRMn4H/view?usp=drive_link)
 
 
 ## Overview
