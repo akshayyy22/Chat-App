@@ -78,7 +78,7 @@ This project is a real-time social platform built using the MERN stack (MongoDB,
 git clone https://github.com/akshayyy22/Chat-App.git
 ```
 
-Now install all packages inside client
+Now install all packages inside Frontend
 
 ```bash
 cd frontend
@@ -86,7 +86,7 @@ cd frontend
 npm i
 ```
 
-Then switch to backend and install packages.
+Then switch to Backend and install packages.
 
 ```bash
 cd backend/server
